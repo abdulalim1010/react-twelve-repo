@@ -1,16 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Blog from '../Blog/Blog';
+
+
+
+
 
 const Blogs = () => {
-  fetch('blogs.json')
-  .then(res => res.json())
-  .then(data=>console.log(data))
+  const [blogs, setBlogs] = useState([]);
+  useEffect(() => {
+    fetch('blogs.json')
+      .then(res => res.json())
+      .then(data =>setBlogs(data))
+  }, []);
+
+
+console.log(blogs);
   return (
-    <div className="flex justify-around justify-center">
-      <div className="left-container w-[70%">
-        total:0
-      </div>
-      <div className="right-container w-[30%]">
-        my result
+    <div>
+      <h1>total:{blogs.length}</h1>
+      <div className="all-blog grid grid-cols-2 gap-4">
+        {
+          blogs.map(blog=><Blog blog={blog}></Blog>)
+        }
       </div>
     </div>
   );
